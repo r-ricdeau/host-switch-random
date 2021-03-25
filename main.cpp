@@ -1,6 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
+#include <cmath>
 #include <fstream>
 #include <sstream>
 
@@ -14,6 +15,7 @@ int Diameter;
 double ASPL;
 #include "MT.h"
 #include "bfs.c"
+#include "hs_bound.c"
 #include "random_gen.cpp"
 
 void graph_file_gen ();
@@ -41,13 +43,14 @@ int main (int argc, char **argv) {
   init_queue();
   ASPL = aspl_host_fast();
   if (ASPL == DBL_MAX) {
-    fprintf(stderr, "Random graph generation failure (please review the three parameters N, M, and R)\n");
+    fprintf(stderr, "Random graph generation failed (please review the three parameters N, M, and R)\n");
     exit(EXIT_FAILURE);
   }
   fprintf(stderr, "%f\n", ASPL);
   fprintf(stderr, "%d\n", Diameter);
   free_queue();
 
+  hs_bound(N, R);
   graph_file_gen();
 
   delete[] hnode;

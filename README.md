@@ -15,14 +15,22 @@ $ make
 ## Execution
 ```
 $ ./random-gen N M R > output_file
-h-ASPL
-h-diameter
+h-ASPL of the generated graph
+h-diameter of the generated graph
+
+Lower bound
+the lower bound on the h-ASPL for given N and R
+the lower bound on the h-diameter for given N and R
 ```
 ### Example
 ```
 $ ./h-aspl 1024 100 24 > random.txt
 4.096732
 5
+
+Lower bound
+3.505376
+4
 ```
 This will generate "random.txt".
 
