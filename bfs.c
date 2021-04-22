@@ -54,8 +54,8 @@ double aspl_host_fast (void)
   int i, j, node;
   int start;
   int distance[M];
-  unsigned long int sum = 0;
-  int num_host_combination = 0;
+  unsigned long long int sum = 0;
+  unsigned long long int num_host_combination = 0;
   int diameter = 0;
   int weight_source, weight_dist;
   int n_enqueue;
@@ -106,8 +106,8 @@ double aspl_host_fast (void)
   }
 
   Diameter = diameter;
-  if (num_host_combination != (N * N - N) / 2)
-	return DBL_MAX;
+  if (num_host_combination != (unsigned long long int)(N * (N - 1)) / 2)
+    return DBL_MAX;
   else
-	return (double)(2 * sum) / (double)(N * N - N);
+    return (double)(sum) / (double)(num_host_combination);
 }
