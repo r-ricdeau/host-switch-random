@@ -30,6 +30,19 @@ int main (int argc, char **argv) {
   M = std::stoi(argv[2]);
   R = std::stoi(argv[3]);
 
+  if ((N < 3) || (M < 1) || (R < 3)) {
+    fprintf(stderr, "The values of N, M, or R are too small.\n");
+    exit(EXIT_FAILURE);
+  }
+  if ((N > 65536) || (M > 10000) || (R > 64)) {
+    fprintf(stderr, "The value sof N, M, or R are too large.\n");
+    exit(EXIT_FAILURE);
+  }
+  if (M * (R - 1) < N) {
+    fprintf(stderr, "The number of switches and/or radix are too small.\n");
+    exit(EXIT_FAILURE);
+  }
+
   hnode = new int[N];
   snode = new int*[M];
   for (int i = 0; i < M; i++) {
