@@ -85,7 +85,6 @@ void graph_file_gen ()
     printf("%d %d\n", i, hnode[i] + N);
   }
   for (int i = 0; i < M; i++) {
-    printf("i = %d\n", i);
     for (int j = 0; j < degree[i]; j++) {
       if ((snode[i][j] >= N) && (i + N < snode[i][j])) {
 	printf("%d %d\n", i + N, snode[i][j]);
