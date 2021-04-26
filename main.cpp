@@ -34,7 +34,7 @@ int main (int argc, char **argv) {
     fprintf(stderr, "The values of N, M, or R are too small.\n");
     exit(EXIT_FAILURE);
   }
-  if ((N > 65536) || (M > 10000) || (R > 64)) {
+  if ((N > 65536) || (M > 10000) || (R > 100)) {
     fprintf(stderr, "The value sof N, M, or R are too large.\n");
     exit(EXIT_FAILURE);
   }
@@ -51,17 +51,19 @@ int main (int argc, char **argv) {
   degree = new int[M];
   hdegree = new int[M];
 
-  fully_random();
-  
+  //fully_random();
+  near_regular_random();
+
   init_queue();
   ASPL = aspl_host_fast();
+  free_queue();
+
   if (ASPL == DBL_MAX) {
     fprintf(stderr, "Random graph generation failed (please review the three parameters N, M, and R)\n");
     exit(EXIT_FAILURE);
   }
   fprintf(stderr, "%f\n", ASPL);
   fprintf(stderr, "%d\n", Diameter);
-  free_queue();
 
   hs_bound(N, R);
   graph_file_gen();

@@ -98,3 +98,61 @@ void remove_loop (int u, int* loop)
   loop[u] -= 2;
   if (v1 == v2) loop[v1] -= 2;
 }
+
+
+void near_regular_random (void)
+{
+  int i, j, k, l;
+  int u, v;
+  int *loop;
+  int hosts_per_switch;
+  int rest = N;
+
+  loop = new int[M];
+  if ((M * R - N) % 2 != 0) {
+    fprintf(stderr, "Number of free ports must be even.\n");
+    exit(EXIT_FAILURE);
+  }
+  hosts_per_switch = N / M;
+
+  init_genrand((unsigned int)time(NULL));
+  /* Generate random host-switch graph */
+  /* STEP1: randomly add edges */
+  // connect host-switch
+  for (i = 0; i < hosts_per_switch * M; i++) {
+    snode[i / hosts_per_switch][i % hosts_per_switch] = i;
+    hnode[i] = i / hosts_per_switch;
+    degree[i / hosts_per_switch]++;
+    hdegree[i / hosts_per_switch]++;
+    rest--;
+  }
+
+  for (j = 0; j < rest; j++) {
+    snode[j][hosts_per_switch] = i;
+    hnode[i++] = j;
+    degree[j]++;
+    hdegree[j]++;
+  }
+
+  // connect switch-switch
+  for (i = 0; i < (M * R - N) / 2; i++) {
+    u = genrand_int31() % M;
+    v = genrand_int31() % M;
+    if (degree[u] == R || degree[v] == R || ((u == v) && (degree[u] > R - 2))) {
+        i--;
+        continue;
+    }
+    if (u == v) loop[u]++;
+    snode[u][degree[u]] = v + N;
+    degree[u]++;
+    snode[v][degree[v]] = u + N;
+    degree[v]++;
+  }
+
+  /* STEP2: remove loops */
+  for (i = 0; i < M; i++) {
+    while (loop[i] > 0) {
+      remove_loop(i, loop);
+    }
+  }
+}
