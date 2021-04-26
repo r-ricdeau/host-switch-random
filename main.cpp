@@ -35,7 +35,7 @@ int main (int argc, char **argv) {
     exit(EXIT_FAILURE);
   }
   if ((N > 65536) || (M > 10000) || (R > 100)) {
-    fprintf(stderr, "The value sof N, M, or R are too large.\n");
+    fprintf(stderr, "The values of N, M, or R are too large.\n");
     exit(EXIT_FAILURE);
   }
   if (M * (R - 1) < N) {
@@ -80,12 +80,13 @@ int main (int argc, char **argv) {
 
 void graph_file_gen ()
 {
-  printf("%d %d %d\n", N, M , R);
+  printf("%d %d %d\n", N, M, R);
   for (int i = 0; i < N; i++) {
     printf("%d %d\n", i, hnode[i] + N);
   }
   for (int i = 0; i < M; i++) {
-    for (int j = 0; j < degree[j]; j++) {
+    printf("i = %d\n", i);
+    for (int j = 0; j < degree[i]; j++) {
       if ((snode[i][j] >= N) && (i + N < snode[i][j])) {
 	printf("%d %d\n", i + N, snode[i][j]);
       }
